@@ -34,6 +34,7 @@ public class Product {
 	private List<Product_In_Ray> product_in_ray;
 	
 	@OneToMany(mappedBy="product")
+	@JsonIgnore
 	private List<Stock> stocks;
 
 	

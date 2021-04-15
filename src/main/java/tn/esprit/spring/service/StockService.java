@@ -12,12 +12,20 @@ public class StockService {
 	@Autowired
 	IStockRepository stock_rep;
 	
+	public Stock getProdStock(long prod_id){
+		return stock_rep.find_product_stock(prod_id);
+	}
+	
 	public int getCurrent_quantity(long prod_id){
 		
 		return stock_rep.find_product_stock(prod_id).getProduct_curent_quantity()		;
 	
 	}
-	
+	public void remove_quantity(long prod_id,int quantity){
+		Stock x = stock_rep.find_product_stock(prod_id);
+		x.setProduct_curent_quantity(x.getProduct_curent_quantity()-quantity);
+		stock_rep.save(x);
+	}
 	public int Max_Quantity_to_add(long prod_id){
 		System.err.println(stock_rep.find_product_stock(prod_id).getProduct_max_qunatity() - this.getCurrent_quantity(prod_id));
 		return stock_rep.find_product_stock(prod_id).getProduct_max_qunatity() - this.getCurrent_quantity(prod_id);
