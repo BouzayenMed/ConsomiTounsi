@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.spring.entity.Ray;
 import tn.esprit.spring.repository.IRayRepository;
 
+
 @Service
 public class RayService {
 
@@ -27,23 +28,20 @@ public class RayService {
 		return ray_rep.findAll();
 	}
 	public void updateRay(Ray ray,Long id)
-		{
-	   ray_rep.findById(id).map(i->{
-		   if (ray.getRayName()!=null) {
-			i.setRayName(ray.getRayName());
-			
-		}
-		   if (ray.getCategory()!=null) {
-			i.setCategory(ray.getCategory());
-		}
-		   ray_rep.save(i);
-		   return i;
-	   });
-	
-	   
-	
-	
+	{
+		ray_rep.findById(id).map(i->{
+			if (ray.getRayName()!=null) {
+				i.setRayName(ray.getRayName());
+
+			}
+			if (ray.getCategory()!=null) {
+				i.setCategory(ray.getCategory());
+			}
+			ray_rep.save(i);
+			return i;
+		});
 	}
+
 
 
 }
