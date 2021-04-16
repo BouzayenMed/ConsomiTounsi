@@ -3,8 +3,8 @@ package tn.esprit.spring.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.spring.entity.Product;
 import tn.esprit.spring.entity.Product_In_Ray;
-
 import tn.esprit.spring.repository.Product_In_RayRepository;
 
 @Service
@@ -12,6 +12,18 @@ public class Product_In_RayService {
 
 	@Autowired
 	Product_In_RayRepository product_in_ray;
+
+	public void  add_new_product_in_ray(int min_quantity, int curent_quantity, int max_quantity, Product product) {
+		if(this.getProdRay(product.getProduct_Id())==null){
+		Product_In_Ray New = new Product_In_Ray( min_quantity,  curent_quantity,  max_quantity,  product.getRay(),  product);
+		product_in_ray.save(New);		}
+		else
+			System.err.println("Product exists in the rays");
+	}
+
+	public void remove_product_in_ray(Product product){
+		product_in_ray.delete(getProdRay(product.getProduct_Id()));
+	}
 
 	public Product_In_Ray getProdRay(long prod_id){
 		return product_in_ray.find_product_Ray(prod_id);
@@ -23,16 +35,16 @@ public class Product_In_RayService {
 
 	}
 
-	public int Max_Quantity_to_add(long prod_id){
+	public int get_Max_Quantity_can_be_added(long prod_id){
 		//System.err.println("In Max");
-		System.err.println("Curent : "+this.getCurrent_quantity(prod_id));
-		System.err.println("Max :"+product_in_ray.find_product_Ray(prod_id).getMax_quantity());
+		//System.err.println("Curent : "+this.getCurrent_quantity(prod_id));
+		//System.err.println("Max :"+product_in_ray.find_product_Ray(prod_id).getMax_quantity());
 		//System.err.println(product_in_ray.find_product_Ray(prod_id).getMax_quantity() - this.getCurrent_quantity(prod_id));
-		
+
 		int x = (product_in_ray.find_product_Ray(prod_id).getMax_quantity() )-( this.getCurrent_quantity(prod_id));
 		System.err.println("X = "+x);
 		return x;
-		
+
 
 
 
@@ -44,10 +56,10 @@ public class Product_In_RayService {
 	public int add_Quantity_to_ray(int quantity , long prod_id){
 		System.err.println("In add_Quantity_to_ray ");
 		System.err.println("Curent qnt stock "+prod_stock.getCurrent_quantity(prod_id));
-		System.err.println("Max qnty can add "+(Max_Quantity_to_add(prod_id)));
+		System.err.println("Max qnty can add "+(get_Max_Quantity_can_be_added(prod_id)));
 		if(prod_stock.getCurrent_quantity(prod_id)>=quantity
 				&&
-				Max_Quantity_to_add( prod_id)>=quantity){
+				get_Max_Quantity_can_be_added( prod_id)>=quantity){
 			System.err.println("In IFFs ");
 			Product_In_Ray s = product_in_ray.find_product_Ray(prod_id);
 			s.setCurent_quantity
