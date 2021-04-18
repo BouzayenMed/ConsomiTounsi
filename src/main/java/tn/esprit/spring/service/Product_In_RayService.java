@@ -14,22 +14,23 @@ public class Product_In_RayService {
 	Product_In_RayRepository product_in_ray;
 
 	public void  add_new_product_in_ray(int min_quantity, int curent_quantity, int max_quantity, Product product) {
-		if(this.getProdRay(product.getProduct_Id())==null){
-		Product_In_Ray New = new Product_In_Ray( min_quantity,  curent_quantity,  max_quantity,  product.getRay(),  product);
-		product_in_ray.save(New);		}
+
+		if(this.getProd_In_Ray_By_ProdID(product.getProduct_Id())==null){
+			Product_In_Ray New = new Product_In_Ray( min_quantity,  curent_quantity,  max_quantity,  product.getRay(),  product);
+			product_in_ray.save(New);		}
 		else
 			System.err.println("Product exists in the rays");
 	}
 
-	public void remove_product_in_ray(Product product){
-		product_in_ray.delete(getProdRay(product.getProduct_Id()));
+	public void remove_product_from_ray_ByProdID(long product_id){
+		 product_in_ray.delete(getProd_In_Ray_By_ProdID(product_id));
 	}
 
-	public Product_In_Ray getProdRay(long prod_id){
+	public Product_In_Ray getProd_In_Ray_By_ProdID(long prod_id){
 		return product_in_ray.find_product_Ray(prod_id);
 	}
 
-	public int getCurrent_quantity(long prod_id){
+	public int getCurrent_quantity_ByProdID(long prod_id){
 
 		return product_in_ray.find_product_Ray(prod_id).getCurent_quantity()		;
 
@@ -41,7 +42,7 @@ public class Product_In_RayService {
 		//System.err.println("Max :"+product_in_ray.find_product_Ray(prod_id).getMax_quantity());
 		//System.err.println(product_in_ray.find_product_Ray(prod_id).getMax_quantity() - this.getCurrent_quantity(prod_id));
 
-		int x = (product_in_ray.find_product_Ray(prod_id).getMax_quantity() )-( this.getCurrent_quantity(prod_id));
+		int x = (product_in_ray.find_product_Ray(prod_id).getMax_quantity() )-( this.getCurrent_quantity_ByProdID(prod_id));
 		System.err.println("X = "+x);
 		return x;
 
@@ -63,7 +64,7 @@ public class Product_In_RayService {
 			System.err.println("In IFFs ");
 			Product_In_Ray s = product_in_ray.find_product_Ray(prod_id);
 			s.setCurent_quantity
-			(this.getCurrent_quantity(prod_id)+quantity);
+			(this.getCurrent_quantity_ByProdID(prod_id)+quantity);
 			System.err.println("Product quantity in ray "+s.getCurent_quantity());
 			prod_stock.remove_quantity(prod_id, quantity);
 			product_in_ray.save(s);
@@ -74,4 +75,11 @@ public class Product_In_RayService {
 
 	}
 
+	//this function called on every sell
+	public void remove_Quantity_from_ray(int quantity , long prod_id){
+		Product_In_Ray x = product_in_ray.find_product_Ray(prod_id);
+		x.setCurent_quantity(product_in_ray.find_product_Ray(prod_id).getCurent_quantity()-quantity);
+		product_in_ray.save(x);
+
+	}
 }
