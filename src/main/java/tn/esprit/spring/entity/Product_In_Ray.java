@@ -2,13 +2,16 @@ package tn.esprit.spring.entity;
 
 
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+
 @Entity
+
 public class Product_In_Ray {
 	
 	
@@ -31,6 +34,7 @@ public class Product_In_Ray {
 	private long id;
 	private int min_quantity;
 	private int curent_quantity;
+	
 	private int max_quantity;
 	
 	@ManyToOne
@@ -65,6 +69,14 @@ public class Product_In_Ray {
 
 	public Ray getRay() {
 		return ray;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public void setRay(Ray ray) {
