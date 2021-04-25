@@ -23,6 +23,9 @@ public class RayService {
 	public void removeRay(Long ID){
 		ray_rep.deleteById(ID);
 	}
+	public Ray selectraybyid(Long ID){
+		return ray_rep.findById(ID).get();
+	}
 
 	public List<Ray> showRay(){
 		return ray_rep.findAll();

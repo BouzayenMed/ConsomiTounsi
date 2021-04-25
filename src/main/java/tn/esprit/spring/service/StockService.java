@@ -12,13 +12,7 @@ public class StockService {
 	@Autowired
 	IStockRepository stock_rep;
 	
-	public IStockRepository getStock_rep() {
-		return stock_rep;
-	}
-
-	public void setStock_rep(IStockRepository stock_rep) {
-		this.stock_rep = stock_rep;
-	}
+	
 
 	public Stock getProdStock(long prod_id){
 		return stock_rep.find_product_stock(prod_id);
