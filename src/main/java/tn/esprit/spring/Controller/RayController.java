@@ -28,6 +28,15 @@ import tn.esprit.spring.service.RayService;
 @RestController
 @RequestMapping
 public class RayController {
+	
+	public String navigate_to_showprod(long id_ray){
+		
+		
+		String navigateTo ="null";
+		this.setSelectedRayid( id_ray);
+		System.err.println(this.getSelectedRayid());
+		return navigateTo ="/pages/admin/showprodinray.xhtml?faces-redirect=true";
+	}
 	@Autowired
 	RayService ray_service;
 	

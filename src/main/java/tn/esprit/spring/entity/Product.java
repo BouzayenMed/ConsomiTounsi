@@ -22,6 +22,8 @@ public class Product {
 	private String Description;
 	private String Brand;
 	private Long BarCode;
+	
+	private long sold;
 
 	@ManyToOne
 	private Category category;
@@ -163,6 +165,14 @@ public class Product {
 
 	public void setProduct_in_ray(List<Product_In_Ray> product_in_ray) {
 		this.product_in_ray = product_in_ray;
+	}
+
+	public long getSold() {
+		return sold;
+	}
+
+	public void setSold(long sold) {
+		this.sold = sold;
 	}
 
 	

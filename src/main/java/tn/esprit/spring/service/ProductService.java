@@ -17,9 +17,15 @@ public class ProductService {
 	@Autowired
 	IProductRepository product_rep;
 	
+	public Product getProd_byid(long id){
+		return product_rep.findById(id).get();
+	}
+	public List<Product> getallprods(){
+		return (List<Product>) product_rep.findAll();
+	}
 	
 	public void AddProduct(Product produit){
-		
+		produit.setSold(0);
 		product_rep.save(produit);
 	}
 	

@@ -13,7 +13,7 @@
 				<f:facet name="header">
 					<h:outputText value="Available Rays" />
 				</f:facet>
-				
+
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Id" />
@@ -36,18 +36,26 @@
 					<h:outputText value="#{Ray.getCategory().getName()}"></h:outputText>
 				</h:column>
 
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Action" />
+					</f:facet>
+					<h:commandButton
+						action="#{RayController.removeRay(Ray.getRay_Id())}"
+						value="Supprimer" />
+					<h:commandButton
+						
+						action="#{RayController.navigate_to_showprod(Ray.getRay_Id())}"
+		
+						value="Affichier liste Product" />
+
+				</h:column>
 
 			</h:dataTable>
-			
-			<h:inputText converterId="javax.faces.Long"  value="#{RayController.selectedRayid}"/>
-			
-			<h:commandButton id="btn" value="Delete Ray"
-					action="#{RayController.removeRay(RayController.selectedRayid)}" />
-				<h:message for="btn" />
-				<p></p>
-				<h:commandButton  value="Add Ray"
-					action="login2.jsf" />
-				
+
+			<p></p>
+			<h:commandButton value="Add Ray" action="login2.jsf" />
+
 		</h:form>
 	</ui:define>
 </ui:composition>

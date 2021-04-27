@@ -1,5 +1,7 @@
 package tn.esprit.spring.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,9 @@ public class Product_In_RayService {
 
 	@Autowired
 	Product_In_RayRepository product_in_ray;
-
+	public List<Product_In_Ray> find_product_Ray_byRayId(long ray_id){
+		return  product_in_ray.find_product_Ray_byRayId(ray_id);
+	}
 	public void  add_new_product_in_ray(int min_quantity, int curent_quantity, int max_quantity, Product product) {
 
 		if(this.getProd_In_Ray_By_ProdID(product.getProduct_Id())==null){
@@ -23,7 +27,7 @@ public class Product_In_RayService {
 	}
 
 	public void remove_product_from_ray_ByProdID(long product_id){
-		 product_in_ray.delete(getProd_In_Ray_By_ProdID(product_id));
+		product_in_ray.delete(getProd_In_Ray_By_ProdID(product_id));
 	}
 
 	public Product_In_Ray getProd_In_Ray_By_ProdID(long prod_id){
@@ -76,10 +80,33 @@ public class Product_In_RayService {
 	}
 
 	//this function called on every sell
+
+	@Autowired
+	SendSmsService sms_serv;
+	@Autowired
+	ProductService prod_serv;
+	//Controlle ala quntity li mich yechriha tssir fil front end bil getcurentquqntity
 	public void remove_Quantity_from_ray(int quantity , long prod_id){
 		Product_In_Ray x = product_in_ray.find_product_Ray(prod_id);
 		x.setCurent_quantity(product_in_ray.find_product_Ray(prod_id).getCurent_quantity()-quantity);
 		product_in_ray.save(x);
+		if(x.getCurent_quantity() <= x.getMin_quantity())
+		{
+			String body = "Product :"+product_in_ray.find_product_Ray(prod_id).getProduct().getName()
+					+" With id :" + prod_id +"Remain "+x.getCurent_quantity();
+			//hne lezem njib tel number te3 user logedin User w nzido l sender
+			String to="+216936020";
+			sms_serv.sendsms(body,to);
+		}
+		//Update sold in product
+		Product P =x.getProduct();
+		P.setSold(x.getProduct().getSold()+quantity);
+		//Necraziw Prod 9dim fil Bd
+		/*calling save() on an object with predefined id will update the corresponding database
+		 * record rather than insert a new one, and also explains why save() is not called create().*/
+		//ken lahkeya shiha najmo bil audit narfo kol prod wa9tech tbe3 w 9adech tbe3
+		//ne5dmo beha f stat :) jaw!!
 
+		prod_serv.AddProduct(P);
 	}
 }
