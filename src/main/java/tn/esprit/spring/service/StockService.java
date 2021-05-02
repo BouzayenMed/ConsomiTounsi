@@ -1,8 +1,11 @@
 package tn.esprit.spring.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.spring.entity.Product;
 import tn.esprit.spring.entity.Stock;
 import tn.esprit.spring.repository.IStockRepository;
 
@@ -11,8 +14,22 @@ public class StockService {
 
 	@Autowired
 	IStockRepository stock_rep;
-
-
+	
+	@Autowired
+	ProductService prod_serv;
+	public void addnewprodstock(int min_quantity ,int curent_quantity,int max_quantity ,long prod_id){
+		Product P = prod_serv.getProd_byid(prod_id);
+		Stock S = new Stock(min_quantity, max_quantity, curent_quantity, P);
+		stock_rep.save(S);
+	}
+	public List<Stock> getallstock()
+	{
+		return (List<Stock>) stock_rep.findAll();
+	}
+	
+	public void removeStockbyId(long id){
+		stock_rep.deleteById(id);
+	}
 
 	public Stock getProdStock(long prod_id){
 		return stock_rep.find_product_stock(prod_id);

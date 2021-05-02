@@ -79,6 +79,20 @@
 					</f:facet>
 					<h:outputText value="#{Prod_in_ray.getMax_quantity() }"></h:outputText>
 				</h:column>
+						<h:column>
+					<f:facet name="header">
+						<h:outputText value="Add Quantity" />
+					</f:facet>
+					
+					<h:inputText value="#{Prod_in_ray.getProduct().x}"></h:inputText>
+					<!-- Hedhi ma temchi ken ki n5arejha me tableau xD -->
+					<td colspan="2"><h:commandButton
+						value="Add"
+						action="#{ProdinRayController.add_Quantity_to_ray(
+						Prod_in_ray.getProduct().x,Prod_in_ray.getProduct().getProduct_Id()
+						)}" /></td>
+
+				</h:column>
 
 
 			</h:dataTable>

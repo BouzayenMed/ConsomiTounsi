@@ -32,6 +32,7 @@ public class RayController {
 	public String navigate_to_showprod(long id_ray){
 		
 		
+		@SuppressWarnings("unused")
 		String navigateTo ="null";
 		this.setSelectedRayid( id_ray);
 		System.err.println(this.getSelectedRayid());

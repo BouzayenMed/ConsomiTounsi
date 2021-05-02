@@ -22,6 +22,11 @@ public class Stock {
 	private int product_max_qunatity;
 	private int product_curent_quantity;
 	
+	public Stock() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@ManyToOne
 	private Product product;
 	
@@ -30,6 +35,14 @@ public class Stock {
 
 	public long getStock_id() {
 		return stock_id;
+	}
+
+	public Stock(int product_min_qunatity, int product_max_qunatity, int product_curent_quantity, Product product) {
+		super();
+		this.product_min_qunatity = product_min_qunatity;
+		this.product_max_qunatity = product_max_qunatity;
+		this.product_curent_quantity = product_curent_quantity;
+		this.product = product;
 	}
 
 	public void setStock_id(long stock_id) {
