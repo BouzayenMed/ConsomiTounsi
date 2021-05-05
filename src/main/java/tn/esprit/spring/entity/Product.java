@@ -2,17 +2,31 @@ package tn.esprit.spring.entity;
 
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Product")
 public class Product {
+	
+	@Transient
+	private int x;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long Product_Id;
+	
+	@Column(name = "name")
 	private String Name;
 
 	private double Buy_Price;
@@ -21,7 +35,20 @@ public class Product {
 	private byte[] Images;
 	private String Description;
 	private String Brand;
-	private Long BarCode;
+	private String barcode;
+	
+	private long sold;
+	
+
+	@Column(name = "materiel")
+	private String materiel;
+
+	@Column(name = "rating")
+	private Float rating;
+
+	@Column(name = "likes")
+	private Integer likes;
+
 
 	@ManyToOne
 	private Category category;
@@ -149,12 +176,12 @@ public class Product {
 		this.ray = ray;
 	}
 
-	public Long getBarCode() {
-		return BarCode;
+	public String getBarCode() {
+		return barcode;
 	}
 
-	public void setBarCode(Long barCode) {
-		BarCode = barCode;
+	public void setBarCode(String barCode) {
+		barcode = barCode;
 	}
 
 	public List<Product_In_Ray> getProduct_in_ray() {
@@ -163,6 +190,54 @@ public class Product {
 
 	public void setProduct_in_ray(List<Product_In_Ray> product_in_ray) {
 		this.product_in_ray = product_in_ray;
+	}
+
+	public long getSold() {
+		return sold;
+	}
+
+	public void setSold(long sold) {
+		this.sold = sold;
+	}
+
+	public String getMateriel() {
+		return materiel;
+	}
+
+	public void setMateriel(String materiel) {
+		this.materiel = materiel;
+	}
+
+	public Float getRating() {
+		return rating;
+	}
+
+	public void setRating(Float rating) {
+		this.rating = rating;
+	}
+
+	public Integer getLikes() {
+		return likes;
+	}
+
+	public void setLikes(Integer likes) {
+		this.likes = likes;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
 	}
 
 	

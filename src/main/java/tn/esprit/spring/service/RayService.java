@@ -16,12 +16,19 @@ public class RayService {
 
 	@Autowired
 	IRayRepository ray_rep;
+	
+	public List<Ray> getraybycat(long cat_id){
+		return  ray_rep.find_ray_byCat(cat_id);
+	}
 
 	public void addRay(Ray R){
 		ray_rep.save(R);
 	}
 	public void removeRay(Long ID){
 		ray_rep.deleteById(ID);
+	}
+	public Ray selectraybyid(Long ID){
+		return ray_rep.findById(ID).get();
 	}
 
 	public List<Ray> showRay(){
