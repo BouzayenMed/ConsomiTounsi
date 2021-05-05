@@ -5,16 +5,20 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/template/template.xhtml">
-	<ui:param name="page_name" value="Connexion" />
+	<ui:param name="page_name" value="Ray Management" />
 	<ui:define name="menu">
 		<h:form id="form">
 		
+		
+			<h:commandButton value="Add Ray" action="pages/admin/welcome?faces-redirect=true" />
 			
 			
-			
-			<h:dataTable value="#{RayController.showRay()}" var="Ray" border="1">
+			<ui:repeat var="Category"
+								value="#{CatController.getcategories()}">
+								
+			<h:dataTable value="#{RayController.getraybycat(Category.getCategory_Id())}" var="Ray" border="1">
 				<f:facet name="header">
-					<h:outputText value="Available Rays" />
+					<h:outputText value="Available in : #{Category.getName()}" />
 				</f:facet>
 
 				<h:column>
@@ -57,8 +61,8 @@
 			</h:dataTable>
 
 			<p></p>
-			<h:commandButton value="Add Ray" action="login2.jsf" />
-
+			
+</ui:repeat>
 		</h:form>
 	</ui:define>
 </ui:composition>
