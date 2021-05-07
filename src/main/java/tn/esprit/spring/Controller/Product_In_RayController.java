@@ -22,8 +22,6 @@ import tn.esprit.spring.service.Product_In_RayService;
 @Scope(value = "session")
 @Controller(value = "ProdinRayController") // Name of the bean in Spring IoC
 @ELBeanName(value = "ProdinRayController") 
-@RestController
-@RequestMapping("Apiprod_ray")
 public class Product_In_RayController {
 
 	private int qnt_to_add;
