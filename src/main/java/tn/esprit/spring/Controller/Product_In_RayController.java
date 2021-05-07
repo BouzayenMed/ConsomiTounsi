@@ -1,6 +1,8 @@
 package tn.esprit.spring.Controller;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ import tn.esprit.spring.service.Product_In_RayService;
 @Scope(value = "session")
 @Controller(value = "ProdinRayController") // Name of the bean in Spring IoC
 @ELBeanName(value = "ProdinRayController") 
+@RestController
+@RequestMapping("Apiprod_ray")
 public class Product_In_RayController {
 
 	private int qnt_to_add;
@@ -34,14 +38,49 @@ public class Product_In_RayController {
 
 
 
+	public List<Product> SortBySold() {
+		List<Product> sorted=prod_serv.getallprods();
+	     sorted.sort(new Comparator<Product>() {
+	    	@Override
+	    	public int compare(Product P1,Product P2){
+	    		return P2.getSold()-P1.getSold();
+	    	}
+		});
+	     return sorted;
+	}
 	@Autowired
 	Product_In_RayService prod_ray;
 
 	@GetMapping("show_product_in_ray_by_RayId")
 	public List<Product_In_Ray> find_product_Ray_byRayId(@RequestParam("ray_id") long ray_id){
 		return  prod_ray.find_product_Ray_byRayId(ray_id);
+		
+		
+	}
+	
+
+	public List<Product_In_Ray> find_product_Ray_byRayIdavecfilter(@RequestParam("ray_id") long ray_id){
+		
+		
+		System.err.println("avec Filter");
+		List<Product_In_Ray>   list = prod_ray.find_product_Ray_byRayId(ray_id);
+		List<Product_In_Ray>   	list2=	list.stream()
+					.filter(p -> p.getCurent_quantity()<p.getMin_quantity())
+					.collect(Collectors.toList())
+				;
+		
+		list2.forEach(p-> System.err.println(p.getCurent_quantity()) );
+		return list2;
+		
+		
 	}
 
+	
+	
+	
+	
+	
+	
 	@GetMapping("show_product_in_ray_by_ProdId")
 	public Product_In_Ray show_prod_in_ray_by_Prod_ID(@RequestParam("prod_id")long prod_id){
 		return prod_ray.getProd_In_Ray_By_ProdID(prod_id);
@@ -64,10 +103,14 @@ public class Product_In_RayController {
 		//else
 		//System.err.println("Product exists in the rays");
 	}
+	
+	
 	@RequestMapping("/add_Quantity_to_ray")
 	public void add_Quantity_to_ray(@RequestParam("quantity") int quantity,@RequestParam("prod_id") long prod_id){
 		System.err.println(quantity);
 		System.err.println(prod_id);
+		
+		
 		prod_ray.add_Quantity_to_ray(quantity, prod_id);
 	}
 	@RequestMapping("/remove_Quantity_from_ray")
@@ -76,6 +119,9 @@ public class Product_In_RayController {
 		
 
 	}
+	
+	
+
 
 	public int getMaxcnt() {
 		return maxcnt;

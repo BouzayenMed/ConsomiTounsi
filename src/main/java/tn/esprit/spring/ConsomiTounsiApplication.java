@@ -20,6 +20,8 @@ public class ConsomiTounsiApplication {
 		SpringApplication.run(ConsomiTounsiApplication.class, args);
 		
 		
+		
+		
 	}
 	@Bean
 	public ServletRegistrationBean<FacesServlet> servletRegistrationBean() {

@@ -1,7 +1,7 @@
 package tn.esprit.spring.service;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,10 @@ public class RayService {
 	@Autowired
 	IRayRepository ray_rep;
 	
+	
+	public Ray get_ray_byId(long id){
+		return ray_rep.findById(id).get();
+	}
 	public List<Ray> getraybycat(long cat_id){
 		return  ray_rep.find_ray_byCat(cat_id);
 	}
