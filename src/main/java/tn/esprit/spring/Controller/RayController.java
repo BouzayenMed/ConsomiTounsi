@@ -28,8 +28,6 @@ import tn.esprit.spring.service.RayService;
 @Controller(value = "RayController") // Name of the bean in Spring IoC
 @ELBeanName(value = "RayController") // Name of the bean used by JSF
 //@Join(path = "/", to = "/showRay.jsf")
-@RestController
-@RequestMapping
 public class RayController {
 	
 	private String name_ray_to_add;
@@ -38,11 +36,11 @@ public class RayController {
 	public String navigate_to_showprod(long id_ray){
 		
 		
-		System.err.println("************ -__-");
+		System.err.println(id_ray+" ------- ****");
 		String navigateTo ="null";
 		this.setSelectedRayid( id_ray);
 		System.err.println(this.getSelectedRayid());
-		navigateTo ="/pages/admin/showprodinray.xhtml?faces-redirect=true";
+		navigateTo ="showprodinray.xhtml?faces-redirect=true";
 		return navigateTo;
 	}
 	@Autowired
