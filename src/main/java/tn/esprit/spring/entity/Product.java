@@ -37,7 +37,7 @@ public class Product {
 	private String Brand;
 	private String barcode;
 	
-	private long sold;
+	private int sold;
 	
 
 	@Column(name = "materiel")
@@ -192,11 +192,11 @@ public class Product {
 		this.product_in_ray = product_in_ray;
 	}
 
-	public long getSold() {
+	public int getSold() {
 		return sold;
 	}
 
-	public void setSold(long sold) {
+	public void setSold(int sold) {
 		this.sold = sold;
 	}
 
@@ -229,6 +229,7 @@ public class Product {
 	}
 
 	public void setX(int x) {
+		System.err.println("this is X "+x);
 		this.x = x;
 	}
 

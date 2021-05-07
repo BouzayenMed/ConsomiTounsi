@@ -5,9 +5,16 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/template/template.xhtml">
-	<ui:param name="page_name" value="Connexion" />
+	<ui:param name="page_name" value="Ray Management" />
 	<ui:define name="menu">
-		<h:form id="form">
+
+
+
+
+
+		<h:form id="form2">
+
+
 
 
 
@@ -67,6 +74,7 @@
 															</h4>
 
 															<div class="info-product-price my-2">
+															
 																<span class="item_price"> <h:outputText
 																		value="#{Ray.getRayName()}">
 																	</h:outputText>
@@ -76,30 +84,24 @@
 
 															<div
 																class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-																<h:form  >
-													<fieldset>
-													<h:commandButton
-						action="#{RayController.navigate_to_showprod(Ray.ray_Id)}"
-						value="Affichier liste Product" />
-													<h:button type="submit" action="#{RayController.navigate_to_showprod(Ray.getRay_Id())}">Show</h:button>
-													<!-- <input click="#{RayController.navigate_to_showprod(Ray.getRay_Id())}" type="submit" name="submit" value="Show" class="button btn" />
-													 --></fieldset>
-													</h:form>
-																	
-											
-																	
-															
+																<h:commandButton
+																	action="#{RayController.navigate_to_showprod(Ray.ray_Id)}"
+																	value="Affichier liste Product" class="button btn"  />
+
+
 															</div>
 														</div>
 													</div>
 												</div>
 
 
-
 											</ui:repeat>
 										</div>
 
 									</div>
+
+
+
 									<!-- //first section -->
 
 								</div>
@@ -116,7 +118,7 @@
 								<div class="search-hotel border-bottom py-2">
 
 									<h3 class="agileits-sear-head mb-3">Search Here..</h3>
-									
+
 								</div>
 								<!-- price -->
 
@@ -341,63 +343,69 @@
 			</div>
 
 
-		
+
 
 		</h:form>
+
+		<h:form id="form">
+
+
+			<h:commandButton value="Add Ray"
+				action="pages/admin/welcome?faces-redirect=true" />
+
+
+			<ui:repeat var="Category" value="#{CatController.getcategories()}">
+
+				<h:dataTable
+					value="#{RayController.getraybycat(Category.getCategory_Id())}"
+					var="Ray" border="1">
+					<f:facet name="header">
+						<h:outputText value="Available in : #{Category.getName()}" />
+					</f:facet>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Id" />
+						</f:facet>
+						<h:outputText value="#{Ray.getRay_Id()}"></h:outputText>
+
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Ray Name" />
+						</f:facet>
+						<h:outputText value="#{Ray.getRayName()}"></h:outputText>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Cat Name" />
+						</f:facet>
+						<h:outputText value="#{Ray.getCategory().getName()}"></h:outputText>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Action" />
+						</f:facet>
+						<h:commandButton
+							action="#{RayController.removeRay(Ray.getRay_Id())}"
+							value="Supprimer" />
+						<h:commandButton
+							action="#{RayController.navigate_to_showprod(Ray.getRay_Id())}"
+							value="Affichier liste Product" />
+
+					</h:column>
+
+				</h:dataTable>
+
+				<p></p>
+
+			</ui:repeat>
+			
+		</h:form>
+
+
 	</ui:define>
-	
-	
-	
-	
-	<ui:define name="content">
-	
-	
-		<h:dataTable value="#{RayController.showRay()}" var="Ray" border="1">
-				<f:facet name="header">
-					<h:outputText value="Available Rays" />
-				</f:facet>
-
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Id" />
-					</f:facet>
-					<h:outputText value="#{Ray.ray_Id}"></h:outputText>
-
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Ray Name" />
-					</f:facet>
-					<h:outputText value="#{Ray.ray_Id}"></h:outputText>
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Cat Name" />
-					</f:facet>
-					<h:outputText value="#{Ray.getCategory().getName()}"></h:outputText>
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Action" />
-					</f:facet>
-					<h:commandButton
-						action="#{RayController.removeRay(Ray.getRay_Id())}"
-						value="Supprimer" />
-					<h:commandButton
-						action="#{RayController.navigate_to_showprod(Ray.ray_Id)}"
-						value="Affichier liste Product" />
-
-				</h:column>
-
-			</h:dataTable>
-
-			<p></p>
-			
-			
-			
-	</ui:define>
-	
 </ui:composition>
