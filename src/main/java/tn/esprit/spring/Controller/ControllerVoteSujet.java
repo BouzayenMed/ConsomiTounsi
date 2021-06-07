@@ -1,0 +1,67 @@
+package tn.esprit.spring.Controller;
+
+import org.ocpsoft.rewrite.el.ELBeanName;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+
+import tn.esprit.spring.entity.VoteSujet;
+import tn.esprit.spring.service.IVoteSujetService;
+
+@Controller(value = "ControllerVoteSujet")
+@ELBeanName(value = "ControllerVotesSujet")
+@Transactional
+public class ControllerVoteSujet {
+
+	@Autowired
+	IVoteSujetService ivoteSujetService;
+	VoteSujet v = new VoteSujet();
+
+	public String ajouterVote(Long userId, Long sujetId) {
+		if (userId==null)
+			userId=(long) 0;
+		
+		String navigateTo = null;
+		if (ivoteSujetService.verificationvoteChoix(userId, sujetId) == 1) {
+			ivoteSujetService.deletevoteById(sujetId, userId);
+			ivoteSujetService.countlike(sujetId);
+			ivoteSujetService.countdislik(sujetId);
+		}
+		else if (ivoteSujetService.verificationvoteChoix(userId, sujetId) == 2) {
+			ivoteSujetService.Updatelike(sujetId, userId);
+			ivoteSujetService.countlike(sujetId);
+			ivoteSujetService.countdislik(sujetId);
+		} else
+			ivoteSujetService.ajouterlike(v, sujetId, userId);
+		ivoteSujetService.countlike(sujetId);
+		ivoteSujetService.countdislik(sujetId);
+		return navigateTo;
+	}
+
+	public String ajouterVotedislike(Long userId, Long sujetId) {
+		if (userId==null)
+			userId=(long) 0;
+		String navigateTo = null;
+		if (ivoteSujetService.verificationvoteChoix(userId, sujetId) == 2) {
+			ivoteSujetService.deletevoteById(sujetId, userId);
+			ivoteSujetService.countlike(sujetId);
+			ivoteSujetService.countdislik(sujetId);
+		}
+
+		else if (ivoteSujetService.verificationvoteChoix(userId, sujetId) == 1) {
+			ivoteSujetService.Updatedislike(sujetId, userId);
+			ivoteSujetService.countlike(sujetId);
+			ivoteSujetService.countdislik(sujetId);
+		} else
+			ivoteSujetService.ajouterdislike(v, sujetId, userId);
+		ivoteSujetService.countlike(sujetId);
+		ivoteSujetService.countdislik(sujetId);
+		return navigateTo;
+	}
+
+	public int verfication(Long userId, Long sujetId) {
+		if (userId==null)
+			userId=(long) 0;
+		return ivoteSujetService.verificationvoteChoix(userId, sujetId);
+	}
+}

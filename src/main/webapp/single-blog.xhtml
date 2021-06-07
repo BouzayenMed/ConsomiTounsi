@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/Template/template.xhtml">
+	<ui:define name="single-blog">
+		<head>
+
+
+<h:outputStylesheet library="blog" name="css/linearicons.css" />
+<h:outputStylesheet library="blog" name="css/themify-icons.css" />
+<h:outputStylesheet library="blog" name="css/bootstrap.css" />
+<h:outputStylesheet library="blog" name="css/owl.carousel.css" />
+<h:outputStylesheet library="blog" name="css/nouislider.min.css" />
+<h:outputStylesheet library="blog" name="css/ion.rangeSlider.css" />
+<link
+			href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+			rel="stylesheet" />
+<h:outputStylesheet library="blog"
+	name="css/ion.rangeSlider.skinFlat.css" />
+<h:outputStylesheet library="blog" name="css/main.css" />
+		</head>
+
+
+		<h:outputStylesheet library="blog"
+			name="css/ion.rangeSlider.skinFlat.css" />
+		<h:outputStylesheet library="blog" name="css/main.css" />
+
+
+
+		<section class="blog_area single-post-area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 posts-list">
+					<div class="single-post row">
+						<div class="col-lg-12">
+							<div class="feature-img">
+								<h:outputText value="#{blogController.findSujetrec().id}"
+									style="display: none" />
+								<ui:param name="ImageSujet"
+									value="#{ControllerImagesSujet.getImageSujet(blogController.sujetrec.id)}" />
+								<img class="img-fluid" src="#{ImageSujet.image}" alt="" />
+							</div>
+						</div>
+						<div class="col-lg-3  col-md-3">
+							<div class="blog_info text-right">
+								<div class="post_tag">
+									<a class="active" href="#"><h:outputText
+											value="#{sujetRec.idCategorieSujet.nomCategorie}" /></a>
+								</div>
+								<ul class="blog_meta list">
+									<li><a href="#"> <h:outputText
+												value="#{blogController.sujetrec.idUser.firstName} #{blogController.sujetrec.idUser.lastName}" /><i
+											class="lnr lnr-user"></i></a></li>
+									<li><a href="#"><h:outputText
+												value="#{blogController.convertireDate(blogController.sujetrec.dateAjout)}" /><i
+											class="lnr lnr-calendar-full"></i></a></li>
+									<li><a href="#"><h:outputText
+												value="#{blogController.countviews(blogController.sujetrec.id)} Views" /><i
+											class="lnr lnr-eye"></i></a></li>
+									<li><a href="#"><h:outputText
+												value="#{singleblogController.countNbcommentaire(blogController.sujetrec.id)} Comments" /><i
+											class="lnr lnr-bubble"></i></a></li>
+									<li><h:form>
+											<h:commandLink
+												action="#{ControllerVoteSujet.ajouterVote(loginController.userDetails.id,blogController.sujetrec.id)}">
+												<h:panelGroup
+													rendered="#{ControllerVoteSujet.verfication(loginController.userDetails.id,blogController.sujetrec.id)==0||ControllerVoteSujet.verfication(loginController.userDetails.id,blogController.sujetrec.id)==2}">
+													<h:outputText
+														value="#{blogController.sujetrec.nbLike} Like" />
+													<i class="lnr lnr-thumbs-up" />
+												</h:panelGroup>
+												<h:panelGroup
+													rendered="#{ControllerVoteSujet.verfication(loginController.userDetails.id,blogController.sujetrec.id)==1}">
+													<h:outputText style="color: #49D85C;"
+														value="#{blogController.sujetrec.nbLike} Like" />
+													<i style="color: #49D85C" class="lnr lnr-thumbs-up" />
+												</h:panelGroup>
+											</h:commandLink>
+										</h:form></li>
+
+									<li><h:form>
+											<h:commandLink
+												action="#{ControllerVoteSujet.ajouterVotedislike(loginController.userDetails.id,blogController.sujetrec.id)}">
+												<h:panelGroup
+													rendered="#{ControllerVoteSujet.verfication(loginController.userDetails.id,blogController.sujetrec.id)==0 ||ControllerVoteSujet.verfication(loginController.userDetails.id,blogController.sujetrec.id)==1}">
+													<h:outputText
+														value="#{blogController.sujetrec.nbDislike} Dislike" />
+													<i class="lnr lnr-thumbs-down"></i>
+												</h:panelGroup>
+												<h:panelGroup
+													rendered="#{ControllerVoteSujet.verfication(loginController.userDetails.id,blogController.sujetrec.id)==2}">
+													<h:outputText style="color: #dc3545"
+														value="#{blogController.sujetrec.nbDislike} Dislike" />
+													<i class="lnr lnr-thumbs-down" style="color: #dc3545"></i>
+												</h:panelGroup>
+											</h:commandLink>
+										</h:form></li>
+								</ul>
+								<ul class="social-links">
+									<li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="#"><i class="fa fa-github"></i></a></li>
+									<li><a href="#"><i class="fa fa-behance"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-lg-9 col-md-9 blog_details">
+							<h2>
+								<h:outputText value="#{blogController.sujetrec.nomSujet}" />
+							</h2>
+						
+						</div>
+						<div class="col-lg-12">
+							<div class="quotes"></div>
+							<div class="row">
+								<div class="col-6">
+									<img class="img-fluid" src="img/blog/post-img1.jpg" alt="" />
+								</div>
+								<div class="col-6">
+									<img class="img-fluid" src="img/blog/post-img2.jpg" alt="" />
+								</div>
+								<div class="col-lg-12 mt-25">
+									<p></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="navigation-area">
+						<div class="row">
+							<div></div>
+							<div></div>
+						</div>
+					</div>
+					<div class="comments-area">
+						<h4>
+							<h:outputText
+								value="#{singleblogController.countNbcommentaire(blogController.sujetrec.id)} Comments" />
+						</h4>
+						<ui:repeat var="commentaire"
+							value="#{singleblogController.afficherCommentaireOfSujet(blogController.sujetrec.id)}"
+							varStatus="status">
+
+							<div class="comment-list">
+								<div class="single-comment justify-content-between d-flex">
+									<div class="user justify-content-between d-flex">
+										<div class="thumb">
+											<img src="img/blog/c1.jpg" alt="" />
+										</div>
+										<div class="desc">
+											<h5>
+												<a href="#"><h:outputText
+														value="#{commentaire.idUser.firstName} #{commentaire.idUser.firstName}" /></a>
+											</h5>
+											<p class="date">
+												<h:outputText
+													value="#{blogController.convertireTime(commentaire.dateAjout)}" />
+											</p>
+											<p class="comment">
+												<h:outputText value="#{commentaire.description}" />
+											</p>
+											<table>
+												<tr>
+													<h:form>
+														<h:commandLink
+															action="#{ControllerVoteCom.ajouterVote(loginController.userDetails.id,commentaire.id)}">
+															<h:panelGroup
+																rendered="#{ControllerVoteCom.verfication(loginController.userDetails.id,commentaire.id)==0||ControllerVoteCom.verfication(loginController.userDetails.id,commentaire.id)==2}">
+																<h:outputText value="#{commentaire.nbLike}" />
+																<i class="lnr lnr-thumbs-up" />
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{ControllerVoteCom.verfication(loginController.userDetails.id,commentaire.id)==1}">
+																<h:outputText style="color: #49D85C;"
+																	value="#{commentaire.nbLike}" />
+																<i style="color: #49D85C" class="lnr lnr-thumbs-up" />
+															</h:panelGroup>
+														</h:commandLink>
+													</h:form>
+												</tr>
+												<tr>
+													<h:outputText value="&#160;" />
+												</tr>
+												<tr>
+													<h:form>
+														<h:commandLink
+															action="#{ControllerVoteCom.ajouterVotedislike(loginController.userDetails.id,commentaire.id)}">
+															<h:panelGroup
+																rendered="#{ControllerVoteCom.verfication(loginController.userDetails.id,commentaire.id)==0 ||ControllerVoteCom.verfication(loginController.userDetails.id,commentaire.id)==1}">
+																<h:outputText value="#{commentaire.nbDislike}" />
+																<i class="lnr lnr-thumbs-down"></i>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{ControllerVoteCom.verfication(loginController.userDetails.id,commentaire.id)==2}">
+																<h:outputText style="color: #dc3545"
+																	value="#{commentaire.nbDislike}" />
+																<i class="lnr lnr-thumbs-down" style="color: #dc3545"></i>
+															</h:panelGroup>
+														</h:commandLink>
+													</h:form>
+												</tr>
+											</table>
+										</div>
+									</div>
+									<h:form>
+										<h:panelGroup
+											rendered="#{singleblogController.verificationCombyId(commentaire.id,loginController.userDetails.id)==1}">
+
+											<div class="reply-btn ">
+												<h:commandButton class="btn-reply text-uppercase az95"
+													value="remove"
+													action="#{singleblogController.removeCommentarie(commentaire.id,loginController.userDetails.id)}" />
+											</div>
+
+										</h:panelGroup>
+									</h:form>
+								</div>
+
+							</div>
+						</ui:repeat>
+					</div>
+
+					<div class="comment-form">
+						<h4>Leave a Reply</h4>
+						<h:form>
+							<div class="form-group">
+								<h:inputTextarea class="form-control mb-10" rows="5"
+									required="true" requiredMessage="Messege" immediate="true"
+									a:placeholder="Message"
+									value="#{singleblogController.description}">
+								</h:inputTextarea>
+
+							</div>
+							<div>
+								<h:commandButton class="primary-btn submit_btn"
+									value="post comment"
+									action="#{singleblogController.ajoutercommentaire(blogController.sujetrec.id)}" />
+							</div>
+
+						</h:form>
+					</div>
+
+				</div>
+				<div class="col-lg-4">
+					<div class="blog_right_sidebar">
+						<aside class="single_sidebar_widget search_widget">
+						<div class="input-group">
+							<input type="text" class="form-control"
+								placeholder="Search Posts" onfocus="this.placeholder = ''"
+								onblur="this.placeholder = 'Search Posts'" /> <span
+								class="input-group-btn">
+								<button class="btn btn-default" type="button">
+									<i class="lnr lnr-magnifier"></i>
+								</button>
+							</span>
+						</div>
+						<!-- /input-group -->
+						<div class="br"></div>
+						</aside>
+						<aside class="single_sidebar_widget author_widget"> <img
+							class="author_img rounded-circle" src="img/blog/author.png"
+							alt="" />
+						<h4>Charlie Barber</h4>
+						<p>Senior blog writer</p>
+						<div class="social_icon">
+							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
+								class="fa fa-twitter"></i></a> <a href="#"><i
+								class="fa fa-github"></i></a> <a href="#"><i
+								class="fa fa-behance"></i></a>
+						</div>
+						<p>Boot camps have its supporters andit sdetractors. Some
+							people do not understand why you should have to spend money on
+							boot camp when you can get. Boot camps have itssuppor ters andits
+							detractors.</p>
+						<div class="br"></div>
+						</aside>
+						<aside class="single_sidebar_widget popular_post_widget">
+						<h3 class="widget_title">Popular Posts</h3>
+						<c:forEach items="#{blogController.popularPost()}" var="s"
+							varStatus="j">
+							<div class="media post_item">
+								<img src="img/blog/popular-post/post#{j.index+1}.jpg" alt="post" />
+								<div class="media-body">
+									<a href="blog-details.html"> <h:form>
+											<h3>
+												<h:commandLink style="color:black" value="#{s.nomSujet}"
+													action="#{blogController.ajouterVus(loginController.userDetails.id,s.id)}">
+													<f:param name="idsujet" value="#{s.id}" />
+												</h:commandLink>
+											</h3>
+										</h:form>
+									</a>
+									<p>
+										<h:outputText
+											value="#{blogController.convertireDate(s.dateAjout)}" />
+									</p>
+								</div>
+							</div>
+						</c:forEach>
+						<div class="br"></div>
+						</aside>
+
+						<aside class="single_sidebar_widget post_category_widget">
+						<h4 class="widget_title">Post Catgories</h4>
+						<ul class="list cat-list">
+							<ui:repeat var="categSujet"
+								value="#{ControllerCategorieSujet.findNameCategoris()}"
+								varStatus="status">
+								<li><a href="#" class="d-flex justify-content-between">
+										<p>
+											<h:outputText value="#{categSujet.nomCategorie} " />
+										</p>
+										<p>
+											<h:outputText
+												value="#{ControllerCategorieSujet.getNbcategeorieSujet(categSujet.id)}" />
+										</p>
+								</a></li>
+							</ui:repeat>
+
+						</ul>
+						<div class="br"></div>
+						</aside>
+						<aside class="single-sidebar-widget newsletter_widget">
+						<h4 class="widget_title">Add Your Post</h4>
+						<p>Here, I focus on a range of items and features that we use
+							in life without giving them a second thought.</p>
+						<a href="#" class="bbtns">Subcribe</a>
+						<p class="text-bottom">You can unsubscribe at any time</p>
+						<div class="br"></div>
+						</aside>
+						<aside class="single-sidebar-widget tag_cloud_widget">
+						<h4 class="widget_title">Tag Clouds</h4>
+						<ul class="list">
+							<li><a href="#">Technology</a></li>
+							<li><a href="#">Fashion</a></li>
+							<li><a href="#">Architecture</a></li>
+							<li><a href="#">Fashion</a></li>
+							<li><a href="#">Food</a></li>
+							<li><a href="#">Technology</a></li>
+							<li><a href="#">Lifestyle</a></li>
+							<li><a href="#">Art</a></li>
+							<li><a href="#">Adventure</a></li>
+							<li><a href="#">Food</a></li>
+							<li><a href="#">Lifestyle</a></li>
+							<li><a href="#">Adventure</a></li>
+						</ul>
+						</aside>
+					</div>
+				</div>
+			</div>
+		</div>
+		</section>
+		<script src="blog/js/commentarie.js"></script>
+	</ui:define>
+</ui:composition>

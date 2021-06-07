@@ -1,0 +1,21 @@
+package tn.esprit.spring.service;
+
+import java.util.List;
+
+import tn.esprit.spring.entity.Commentaire;
+
+
+
+public interface ICommentaireService {
+
+	public int ajouterCommentaire(Commentaire v,Long sujetId,Long userId);
+	public List<Commentaire> getCommentaire(Long sujetId,Long userId);
+	public Commentaire getCommentairebyId(Long comId);
+	public List<Commentaire> getCommentaireOfSujet(Long sujetId);
+	public int  deletecommentairevoteById(Long  comId,Long userId,Long sujetId);
+	public int RemoveCommentairebyIdUser(Long comId,Long userId);
+	 public int verivcationCom(Long comId,Long userId);
+	public void modifierCommentaire(String desc,Long comId);
+    public String findNamebyCommentaire(Long comId);
+    public int countNbcommentaire(Long id);
+}
